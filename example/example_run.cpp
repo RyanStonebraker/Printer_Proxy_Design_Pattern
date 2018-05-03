@@ -13,4 +13,5 @@ int main () {
   testPrinter.printJob("testing");
   testPrinter.printJob("tasetsa");
   testPrinter.printJob("asfsdf");
+  testPrinter.stopWatchingJobs();
 }

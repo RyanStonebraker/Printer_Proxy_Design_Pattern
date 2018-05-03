@@ -18,7 +18,8 @@
 #endif
 
 Printer::Printer(const std::string & file_dir) : _printDest(file_dir),
-                                                 _printNumber(0)
+                                                 _printNumber(0),
+                                                 _keepWatchingJobs(true)
 {
   watchPrintJobs();
 }
@@ -33,7 +34,7 @@ void Printer::printJob(const std::string & contents) {
 
 std::string Printer::getPrintLocation() {
   ++_printNumber;
-  std::string printLocation = (_printDest.size() == 0
+  auto printLocation = (_printDest.size() == 0
                               || _printDest[_printDest.size() - 1] == '/')
                               ? _printDest : _printDest + "/";
   printLocation += "print_" + std::to_string(_printNumber) + ".txt";
@@ -44,19 +45,29 @@ std::string Printer::getPrintLocation() {
 void Printer::watchPrintJobs() {
   _printJobWatcher = std::thread([&]() {
     while (true) {
-      // std::cout << "Print Queue Size: " << _printJobs.size() << std::endl;
       if (_printJobs.size() > 0) {
         std::ofstream printWriter(getPrintLocation());
         printWriter << _printJobs.front();
-        _printJobs.pop();
 
         // This is done to intentionally make slower for demo purposes
         usleep(1000000);
+        
+        _printJobs.pop();
       }
       else {
+        if (_keepWatchingJobs == false)
+          break;
         // This is done to intentionally make slower for demo purposes
         usleep(1000000);
       }
     }
   });
+}
+
+void Printer::stopWatchingJobs() {
+  _keepWatchingJobs = false;
+}
+
+bool Printer::allJobsDone() {
+  return _printJobs.size() == 0;
 }

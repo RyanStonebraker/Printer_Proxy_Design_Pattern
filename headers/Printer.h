@@ -15,6 +15,8 @@ public:
   ~Printer();
 public:
   void printJob(const std::string & contents);
+  void stopWatchingJobs();
+  bool allJobsDone();
 private:
   void watchPrintJobs();
   std::string getPrintLocation();
@@ -23,6 +25,7 @@ private:
   std::thread _printJobWatcher;
   std::string _printDest;
   size_t _printNumber;
+  bool _keepWatchingJobs;
 };
 
 #endif

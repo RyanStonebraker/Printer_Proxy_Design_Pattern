@@ -2,8 +2,8 @@ CC := clang++
 CFLAGS := -std=c++14 -I dependencies -I headers -Wall -Werror
 SOURCES := $(wildcard src/*.cpp)
 EXAMPLE_SOURCE := $(wildcard example/*.cpp)
-UNIT_SOURCE := tests/unit_tests.cpp
-INTEGRATION_SOURCE := tests/integration_tests.cpp
+UNIT_SOURCE := tests/unit_tests.cpp tests/main.cpp
+INTEGRATION_SOURCE := tests/integration_tests.cpp tests/main.cpp
 UNIT_TEST_TARGET := bin/unit_test
 INTEGRATION_TEST_TARGET := bin/integration_test
 EXAMPLE_TARGET := bin/example_run
@@ -27,3 +27,6 @@ run_tests:
 .PHONY : clean
 clean :
 	-rm $(wildcard bin/*)
+
+clean_tests :
+	-rm $(wildcard tests/*.txt)
