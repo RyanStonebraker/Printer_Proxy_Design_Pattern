@@ -24,8 +24,28 @@ Printer::Printer(const std::string & file_dir) : _printDest(file_dir),
   watchPrintJobs();
 }
 
+Printer::Printer(Printer && rhs)  {
+  _printJobs = std::move(rhs._printJobs);
+  _printDest = std::move(rhs._printDest);
+  _printNumber = std::move(rhs._printNumber);
+  rhs.stopWatchingJobs();
+  _keepWatchingJobs = true;
+}
+
+Printer Printer::operator=(Printer && rhs) {
+  _printJobs = std::move(rhs._printJobs);
+  _printDest = std::move(rhs._printDest);
+  _printNumber = std::move(rhs._printNumber);
+  rhs.stopWatchingJobs();
+  _keepWatchingJobs = true;
+
+  return std::move(*this);
+}
+
+
 Printer::~Printer() {
-  _printJobWatcher.join();
+  if (_printJobWatcher.joinable())
+    _printJobWatcher.join();
 }
 
 void Printer::printJob(const std::string & contents) {
@@ -51,7 +71,7 @@ void Printer::watchPrintJobs() {
 
         // This is done to intentionally make slower for demo purposes
         usleep(1000000);
-        
+
         _printJobs.pop();
       }
       else {
@@ -65,7 +85,18 @@ void Printer::watchPrintJobs() {
 }
 
 void Printer::stopWatchingJobs() {
-  _keepWatchingJobs = false;
+  if (_keepWatchingJobs) {
+    _keepWatchingJobs = false;
+    if (_printJobWatcher.joinable())
+      _printJobWatcher.join();
+  }
+}
+
+void Printer::startWatchingJobs() {
+  if (!_keepWatchingJobs) {
+    _keepWatchingJobs = true;
+    watchPrintJobs();
+  }
 }
 
 bool Printer::allJobsDone() {

@@ -4,7 +4,7 @@
 #include "catch.hpp"
 
 #include "Printer.h"
-#include "Print.h"
+#include "PrintProxy.h"
 #include <fstream>
 #include <stdio.h>
 

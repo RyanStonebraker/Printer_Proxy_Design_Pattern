@@ -13,9 +13,12 @@ class Printer {
 public:
   Printer(const std::string & file_dir="bin");
   ~Printer();
+  Printer(Printer && rhs);
+  Printer operator=(Printer && rhs);
 public:
   void printJob(const std::string & contents);
   void stopWatchingJobs();
+  void startWatchingJobs();
   bool allJobsDone();
 private:
   void watchPrintJobs();
