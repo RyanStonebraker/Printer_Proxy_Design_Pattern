@@ -14,6 +14,11 @@ PrintProxy::~PrintProxy() {
   _destPrinter.stopWatchingJobs();
 }
 
+PrintProxy & operator<<(PrintProxy & ps, const std::string & content) {
+  ps.print(content);
+  return ps;
+}
+
 void PrintProxy::flush() {
   _destPrinter.startWatchingJobs();
   if (_printCache.size() > 0) {

@@ -1,5 +1,5 @@
 // client_test.cpp
-// tests that make sure the print proxy class is working correctly
+// tests that make sure the print class is working correctly
 
 #include "catch.hpp"
 

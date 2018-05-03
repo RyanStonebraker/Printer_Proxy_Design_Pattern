@@ -58,6 +58,10 @@ std::string Printer::getPrintLocation() {
                               || _printDest[_printDest.size() - 1] == '/')
                               ? _printDest : _printDest + "/";
   printLocation += "print_" + std::to_string(_printNumber) + ".txt";
+  std::ifstream testLoc(printLocation);
+  if (!!testLoc)
+    return getPrintLocation();
+    
   std::cout << "Printing To: " << printLocation << std::endl;
   return printLocation;
 }
