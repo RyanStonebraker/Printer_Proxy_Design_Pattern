@@ -6,14 +6,15 @@ Users write to a proxy printer class that only sends data to the printer when th
 ## Proxy Design Pattern:
 The purpose of the Proxy design pattern is to create another layer of indirection for the client to interact with. This layer of indirection is useful for cases in which an operation is expensive in some way and adding another interface has the capability of minimizing this expense. Furthermore, by adding an intermediate proxy class, there is potential for more functionality to be added to it.
 
-## Goal of Example:
-In order to show the Proxy Design Pattern, a mock Printer class was created to mimic an expensive operation and the PrintProxy class was made to serve as a Proxy that makes the task more efficient. For the purpose of this example, it is assumed that formatting of the printed pages is not important and that it doesn't actually matter which page information is on, as long as it is on a page that will be printed in as contiguous of a block as possible.
-
 ## Example Run:
 Example client code was written to demonstrate the benefits of the proxy class:
-<img src="README_Media/example_run.gif" width=500></img>
+<img src="README_Media/example_run.gif" width=500>
+
 As you can see, the proxy class greatly reduces time and the number of printing calls. Internally, the proxy class also slightly changes the interface to be more usable:
-![](README_Media/client_code.png)
+<img src="README_Media/client_code.png" width=500>
+
+### Goal of Example:
+In order to show the Proxy Design Pattern, a mock Printer class was created to mimic an expensive operation and the PrintProxy class was made to serve as a Proxy that makes the task more efficient. For the purpose of this example, it is assumed that formatting of the printed pages is not important and that it doesn't actually matter which page information is on, as long as it is on a page that will be printed in as contiguous of a block as possible.
 
 ## Building and Executing the Example:
 A make file was created for convenience when running the example. To build the example, in the root directory of the project run:
