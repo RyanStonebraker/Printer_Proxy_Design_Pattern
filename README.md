@@ -11,6 +11,7 @@ Example client code was written to demonstrate the benefits of the proxy class:
 <img src="README_Media/example_run.gif" width=500>
 
 As you can see, the proxy class greatly reduces time and the number of printing calls. Internally, the proxy class also slightly changes the interface to be more usable:
+
 <img src="README_Media/client_code.png" width=500>
 
 ### Goal of Example:
