@@ -61,7 +61,7 @@ std::string Printer::getPrintLocation() {
   std::ifstream testLoc(printLocation);
   if (!!testLoc)
     return getPrintLocation();
-    
+
   std::cout << "Printing To: " << printLocation << std::endl;
   return printLocation;
 }
@@ -91,8 +91,10 @@ void Printer::watchPrintJobs() {
 void Printer::stopWatchingJobs() {
   if (_keepWatchingJobs) {
     _keepWatchingJobs = false;
-    if (_printJobWatcher.joinable())
-      _printJobWatcher.join();
+
+    while (!_printJobWatcher.joinable()){}
+		
+    _printJobWatcher.join();
   }
 }
 
